@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sparrow Photography</title>
+  </head>
+  <body>
+    <nav class="nav">
+      <a class="logo" href="index.html"><strong>Sparrow Photography</strong></a>
+    </nav>
+
+    <div id="app">Loading...</div>
+
+    <footer>
+      <p><em>Photos by Jack Sparrow. All rights reserved.</em></p>
+    </footer>
+
+    <script>
+      const app = document.querySelector("#app");
+
+      function getRequiredPhoto(photos) {
+        const id = new URL(window.location.href).searchParams.get("id");
+        const requiredPhoto = photos.find((pic) => pic.id === id);
+        if (!requiredPhoto) {
+          return `<h1>Oh no! </h1>
+                <p>This photo is missing</p>
+                `;
+        } else {
+          document.title = `${requiredPhoto.name}`;
+          return `
+            <h1>${requiredPhoto.name}</h1>
+            <p><img src="${requiredPhoto.url}"></p>
+            <p>${requiredPhoto.description}</p>
+            `;
+        }
+      }
+
+      async function getPhotos() {
+        try {
+          let response = await fetch(
+            "https://vanillajsacademy.com/api/photos.json"
+          );
+          if (!response.ok) throw response;
+          const photos = await response.json();
+          app.innerHTML = getRequiredPhoto(photos);
+        } catch (error) {
+          console.warn(error);
+          app.innerHTML = getRequiredPhoto();
+        }
+      }
+
+      // Initialize
+      getPhotos();
+    </script>
+  </body>
+</html>

@@ -4,74 +4,7 @@
     <meta charset="utf-8" />
     <title>Sparrow Photography</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <style>
-      body {
-        margin: 0 auto;
-        max-width: 50em;
-        width: 88%;
-      }
-
-      /**
-			 * Grid Layout
-			 */
-
-      @media (min-width: 20em) {
-        #photos {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          grid-template-rows: 1fr;
-          grid-column-gap: 2em;
-          grid-row-gap: 2em;
-        }
-      }
-
-      @media (min-width: 32em) {
-        #photos {
-          grid-template-columns: repeat(3, 1fr);
-        }
-      }
-
-      @media (min-width: 42em) {
-        #photos {
-          grid-template-columns: repeat(4, 1fr);
-        }
-      }
-
-      /**
-			 * Nav Menu
-			 */
-
-      .nav {
-        padding: 1em 0;
-      }
-
-      .nav a {
-        text-decoration: none;
-      }
-
-      .nav a:focus,
-      .nav a:hover {
-        text-decoration: underline;
-      }
-
-      /**
-			 * Footer
-			 */
-
-      footer {
-        border-top: 1px solid #e5e5e5;
-        margin-top: 5em;
-      }
-
-      /**
-			 * Responsive images
-			 */
-
-      img {
-        height: auto;
-        max-width: 100%;
-      }
-    </style>
+    <link rel="stylesheet" type="text/css" href="style.css" />
   </head>
   <body>
     <nav class="nav">
@@ -100,13 +33,15 @@
         if (!urls.length) {
           return "<p>There is no available photos at this time. Please try Later...</p>";
         } else {
-          return `<p>High end photos </p>
+          return `<p>High end photos</p>
           <div id="photos">
             ${urls
               .map(function (photo) {
                 return `
                 <div class="photo">
+                  <a href="photo.html?id=${encodeURIComponent(photo.id)}">
                   <img src="${photo.url}" alt="${photo.description}">
+                  <div>${photo.name}</div>
                 </div>`;
               })
               .join("")}</div>`;
