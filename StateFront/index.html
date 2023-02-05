@@ -87,7 +87,33 @@
     </footer>
 
     <script>
-      // Code goes here...
+      async function getPhotos() {
+        const data = await (
+          await fetch("https://vanillajsacademy.com/api/photos.json")
+        ).json();
+        const photos = data.map((pic) => pic);
+        const app = document.querySelector("#app");
+        app.innerHTML = await template(photos);
+      }
+
+      async function template(urls) {
+        if (!urls.length) {
+          return "<p>There is no available photos at this time. Please try Later...</p>";
+        } else {
+          return `<p>High end photos </p>
+          <div id="photos">
+            ${urls
+              .map(function (photo) {
+                return `
+                <div class="photo">
+                  <img src="${photo.url}" alt="${photo.description}">
+                </div>`;
+              })
+              .join("")}</div>`;
+        }
+      }
+
+      getPhotos();
     </script>
   </body>
 </html>
